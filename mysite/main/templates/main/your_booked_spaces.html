@@ -1,0 +1,195 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your booked spaces</title>
+    <link rel="stylesheet" href="{%static 'mysite/your_booked_spaces.css'%}">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vue-the-mask@0.11.1/dist/vue-the-mask.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    {% if loginstatus == 'NotLogedin' %}
+    <a class="homeBtn" href="{% url 'sign'%}">Sign In/Up</a>
+    {% endif %}
+    <div class="top-container">
+    {% if loginstatus == 'Logedin' %}
+        <form method="post">
+            {% csrf_token %}
+        <div class="action">
+            <div class="profile" onclick="menuToggle()">
+            <img src="{% static 'mysite/profile_image.png'%}" alt="">
+            </div>
+            <div class="menu">
+            <h3>{{nameofuser}}</h3>
+            <ul>
+                <li><img src="{% static 'mysite/My_Profile.png'%}" alt=""><a href="{% url 'Dashboard'%}">Home</a></li>
+                <li><img src="{% static 'mysite/Book_parking_slot.png'%}" alt=""><a href="{% url 'booked'%}">Your Booked Slot</a></li>
+                <li><img src="{% static 'mysite/Lend_your_space.png'%}" alt=""><a href="{% url 'land Your Space'%}">Lend your Space</a></li>
+                <li><img src="{% static 'mysite/Logout.png'%}" alt=""><input type="submit" name="logout" value="Logout" style="background: none;border: none;color: #fff;font-size: 16px;"></li>
+            </ul>
+            </div>
+        </div>
+        </form>
+        {% endif %}
+        <div class="title">Your Booked Spaces</div>
+    </div>
+    
+    <div class="card-container" data-park-cards-container>
+    <template data-park-template>
+        <div class="card">
+            <img src="Parking_img.jpg" alt="" imageconatis>
+            <div class="park-desc">
+            <div class="title-city-category">
+                <h5 data-category></h5>
+                <h4 data-title></h4>
+                <div class="location">
+                    <h5 data-location> <img src="Location.png" alt=""> </h5> 
+                    <h5 data-landmark> - </h5>
+                </div>
+            </div>
+            <div class="park-desc-sub">
+                <div class="park-desc-price">
+                    <h2 data-price> </h2><sub style="margin-top: 10px;">/ Day</sub>
+                </div>
+                <h2 class="expiryDate" data-expiry>Expires: </h2>
+                <form method="post">
+                    {% csrf_token %}
+                <button type="button" cancleorder name="cancelorder" onclick="clickedcnc(this);openPaymentResult()" value="">Cancel</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </template>
+    </div> 
+
+
+    <div class="paymentSuccess">
+        <div class="success-checkmark">
+          <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+          </div>
+        </div>
+        <div class="paymentText">Cancelled Successful</div>
+        <div class="para">
+          <br>
+          <p style="text-align: center;">
+          Your parking space has been cancelled successfully and your money will refunded within 24hrs.
+          </p>
+          <br>
+        </div>
+        <div class="aboveCheckMark">
+          <form method="post">
+            {% csrf_token %}
+          <input type="submit" class="closeButton" name="safuu" value="OK">
+          </form>
+        </div>
+      </div>
+
+
+  <script>
+    function menuToggle() {
+      const toggleMenu = document.querySelector('.menu');
+      toggleMenu.classList.toggle('active')
+    }
+  </script>
+  <script>
+    const parkingCardTemplate = document.querySelector("[data-park-template]")
+    const parkingCardContainer = document.querySelector("[data-park-cards-container]")
+    const searchInput = document.querySelector("[data-search]")
+
+    fetch("{% static 'mysite/dash.json'%}")
+        .then(res => res.json())
+        .then(data => {
+            parkingCards = data.map(user => {
+                const card = parkingCardTemplate.content.cloneNode(true).children[0]
+                const category = card.querySelector("[data-category]")
+                const title = card.querySelector("[data-title]")
+                const location = card.querySelector("[data-location]")
+                const landMark = card.querySelector("[data-landmark]")
+                const price = card.querySelector("[data-price]")
+                const image = card.querySelector("[imageconatis]")
+                const expiryDate = card.querySelector("[data-expiry]")
+                const cancle = card.querySelector("[cancleorder]")
+                category.textContent = user.sid__type
+                title.textContent = user.sid__title
+                location.textContent = user.sid__city
+                landMark.textContent += user.sid__landmark
+                price.textContent = user.sid__price
+                image.src = `${user.sid__image}`
+                expiryDate.textContent += user.expires
+                cancle.value = user.bid
+                parkingCardContainer.append(card)
+                return { category: user.sid__type, title: user.sid__title, location: user.sid__city, landMark: user.sid__landmark, price: user.sid__price,expiryDate: user.expires,element: card }
+            })        
+        })
+  </script>
+
+  <script>
+        $(".card-form__button").click(function () {
+            $(".check-icon").hide();
+            setTimeout(function () {
+              $(".check-icon").show();
+            }, 10);
+          });
+        let paymentSuccess = document.querySelector(".paymentSuccess")
+        let checkMark = document.querySelector(".success-checkmark")
+
+        function openPaymentResult() {
+            paymentSuccess.style.visibility = "visible"
+            paymentSuccess.style.opacity = "1"
+            paymentSuccess.style.height = "40%"
+            paymentSuccess.style.width = "35%"
+            paymentSuccess.style.top = "13em"
+            checkMark.style.visibility = "visible"
+            paymentSuccess.style.transition = "0.5s"
+        }
+
+        function closeDivToggle() {
+          paymentSuccess.style.visibility = "hidden"
+          paymentSuccess.style.opacity = "0"
+          paymentSuccess.style.height = "0"
+          paymentSuccess.style.width = "0"
+          paymentSuccess.style.top = "30em"
+          checkMark.style.visibility = "hidden"
+          paymentSuccess.style.transition = "0.5s"
+        }
+  </script>
+
+
+
+  <script type="text/javascript">
+    function clickedcnc(obj){
+        var value = 0
+       // $("button").click(function(e){
+            value=$(obj).val();
+            console.log($(obj).val())
+                //$(document).on('input','#clickedform',function(e){
+
+                      //  obj.preventDefault();
+
+                        $.ajax({
+                            type:'POST',
+                            url: '/cancelclicked/',
+                            data:{
+                                cancelorder : value,
+                                csrfmiddlewaretoken :$('input[name=csrfmiddlewaretoken]').val()
+                            },
+                            sucess:function(){
+                                console.log("Data Transfered")
+                            }
+
+                        });
+             //   });
+       // });
+
+    }
+    </script>
+
+</body>
+</html>

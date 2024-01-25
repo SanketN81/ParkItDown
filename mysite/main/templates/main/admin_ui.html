@@ -1,0 +1,118 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="{%static 'mysite/admin_ui.css'%}">
+</head>
+<body>
+    {% if adminloginstatus == "admin here" %}
+    <div class="container-top">
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" name="adminlogout" class="logout-btn" value="Logout">
+        </form>
+        <div class="search-add">
+            <input type="text" class="search-bar" placeholder="Search.." data-search>
+        </div>
+    </div>
+    <div class="container-bottom-spaces" data-park-cards-container>
+        <div class="column-spaces-row">
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">Title</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">Name</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">City</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">Category</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px 0 0;">Total Slots</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">Price</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">Operation</div>
+        </div>
+        <template data-park-template>
+        <form method="post">
+             {% csrf_token %}
+        <div class="spaces-row">
+            <div class="spaces-row-element" style="justify-content: flex-start;">
+                <div class="img-container">
+                    <img data-img style="width:72px;height: 48px;">
+                </div>
+                <div class="img-title" data-title></div>
+            </div>
+            <div class="spaces-row-element"  data-name></div>
+            <div class="spaces-row-element" style="width: 10.5em;" data-city ></div>
+            <div class="spaces-row-element"  style="width: 10.5em;" data-category></div>
+            <div class="spaces-row-element"   style="width: 8.6em;" data-slots></div>
+            <div class="spaces-row-element" >₹<span data-price></span
+                ></div>
+            <div class="spaces-row-element" ><a class="viewDoc-btn"download documentview>Docs</a><button class="approve-btn" name="spaceapprove" btnapprove>Approve</button><button class="reject-btn"name="spacereject" btnreject>Reject</button></div>
+        </div>
+    </form>
+    </template>
+    </div>
+
+
+
+<script>
+    const parkingCardTemplate = document.querySelector("[data-park-template]")
+    const parkingCardContainer = document.querySelector("[data-park-cards-container]")
+    const searchInput = document.querySelector("[data-search]")
+    let parkingCards = []
+
+    searchInput.addEventListener("input", e => {
+        const value = e.target.value.toLowerCase()
+        console.log(value)
+        parkingCards.forEach(user => {
+            const isVisible = user.city.toLowerCase().includes(value)|| user.title.toLowerCase().includes(value)
+
+            user.element.classList.toggle("hide", !isVisible)
+        })
+    })
+
+    fetch("{% static 'mysite/dash.json'%}")
+        .then(res => res.json())
+        .then(data => {
+            parkingCards = data.map(user => {
+                const card = parkingCardTemplate.content.cloneNode(true).children[0]
+                const category = card.querySelector("[data-category]")
+                const title = card.querySelector("[data-title]")
+                const city = card.querySelector("[data-city]")
+                const imagespark = card.querySelector("[data-img]")
+                const price = card.querySelector("[data-price]")
+                const slots = card.querySelector("[data-slots]")
+                const name = card.querySelector("[data-name]")
+                const updatebtn = card.querySelector("[btnapprove]")
+                const deletebtn = card.querySelector("[btnreject]")
+                const documentv = card.querySelector("[documentview]")
+                category.textContent = user.fields.type
+                title.textContent = user.fields.title
+                city.textContent = user.fields.city
+                price.textContent = user.fields.price
+                imagespark.src = `${user.fields.image}`
+                documentv.href = `${user.fields.document}`
+                slots.textContent = user.fields.slots
+                name.textContent = user.fields.name
+                updatebtn.value = user.pk
+                deletebtn.value = user.pk
+                //console.log(images.src)
+                 parkingCardContainer.append(card)
+                //return { category: user.category, title: user.title, location: user.location, price: user.price, element: card }
+                return {title: user.fields.title, city: user.fields.city, price: user.fields.price,imagespark : user.fields.image,slots : user.fields.slots,document:user.fields.document,category:user.type,name: user.fields.name,updatebtn : user.pk,deletebtn: user.pk,element: card }
+            })        
+        })
+  </script>
+
+
+
+
+    <!--
+
+
+    <div class="container-bottom-noSpaces">
+        <h3>You currently have no spaces</h3>
+    </div>
+    -->
+    <script src="{%static 'mysite/admin_ui.js'%}"></script>
+{% endif %}    
+</body>
+</html>

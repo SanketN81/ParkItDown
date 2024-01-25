@@ -1,0 +1,344 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <title>Lend your Space</title>
+    <link rel="stylesheet" href="{%static 'mysite/lend_your_space.css'%}">
+</head>
+<body>
+
+    {% if loginstatus == 'NotLogedin' %}
+    <a class="homeBtn" href="{% url 'sign'%}">Sign In/Up</a>
+    {% endif %}
+    <div class="container-top">
+    
+        {% if loginstatus == 'Logedin' %}
+        <form method="post">
+            {% csrf_token %}
+        <div class="action">
+            <div class="profile" onclick="menuToggle()">
+              <img src="{% static 'mysite/profile_image.png'%}" alt="">
+            </div>
+            <div class="menu">
+              <h3>{{nameofuser}}</h3>
+              <ul>
+                <li><img src="{% static 'mysite/My_Profile.png'%}" alt=""><a href="{% url 'Dashboard'%}">Home</a></li>
+                <li><img src="{% static 'mysite/Book_parking_slot.png'%}" alt=""><a href="{% url 'booked'%}">Your Booked Slot</a></li>
+                <li><img src="{% static 'mysite/Lend_your_space.png'%}" alt=""><a href="{% url 'land Your Space'%}">Lend your Space</a></li>
+                <li><img src="{% static 'mysite/Logout.png'%}" alt=""><input type="submit" name="logout" value="Logout" style="background: none;border: none;color: #fff;font-size: 16px;"></li>
+              </ul>
+            </div>
+        </div>
+        </form>
+        {% endif %}
+        <div class="title">Lend Your Space</div>
+        
+        <div class="search-add">
+            <input type="text" class="search-bar" placeholder="Search.." data-search>
+            <button class="add-spaces-btn2" onclick="addSpaceToggle()">ADD SPACE <b>&#43;</b></button>
+        </div>
+    </div>
+    
+    <div class="container-bottom-spaces" data-park-cards-container>
+
+        <div class="column-spaces-row">
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">Title</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">City</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">Category</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">Status</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px 0 0;">Available/Total Slots</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">Price</div>
+            <div class="spaces-row-element" style="width: 8em; padding: 0 30px;">Operation</div>
+        </div>
+        <template data-park-template>
+            <form method="post" id="clickedform">
+                    {% csrf_token %}
+        <div class="spaces-row" style="margin-top: 10px;">
+            <div class="spaces-row-element" class="landingcard">
+                <div class="img-container" style="width:72px;height: 48px;">
+                    <img data-img>
+                </div>
+                <div class="img-title" data-title></div>
+            </div>
+            <div class="spaces-row-element" data-city></div>
+            <div class="spaces-row-element" data-category></div>
+            <div class="spaces-row-element">
+                <div name="status-el" data-status></div>
+            </div>
+            <div class="spaces-row-element" data-slots></div>
+            <div class="spaces-row-element">₹<span data-price></span
+                ></div>
+            <div class="spaces-row-element"><button type="button" class="update-btn" name="upadatebtn" onclick="updateSpaceToggle();clickeddata(this)" id="upclick" updatebtn value="Hell">Update</button><button class="delete-btn" name="delclick" onclick="clickeddatadel(this);" deletebnt>Delete</button></div>
+        </div>
+        </form>
+        </template>
+    </div>
+
+    
+
+    <!--
+
+
+    <div class="container-bottom-noSpaces">
+        <h3>You currently have no spaces</h3>
+    </div>
+    -->
+
+    
+         
+    <div class="pop-up">
+        <div class="pop-up-container1">
+            <h1>Add Space</h1>
+            <button onclick="closeDivToggle()">X</button>
+        </div>
+        <div class="pop-up-container2">
+            <div class="pop-up-sub-cont1">
+                <form action="" method="POST" enctype="multipart/form-data" class="form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="title" class="form-control" name='spacetitle' required>
+                        <label class="form-control-placeholder" for="title">Title</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="city" class="form-control" name='spacecity' required>
+                        <label class="form-control-placeholder" for="city">City</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="address" class="form-control" name='spaceadd' required>
+                        <label class="form-control-placeholder" for="address">Address</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="landmark" class="form-control" name='spacelm'required>
+                        <label class="form-control-placeholder" for="landmark">Landmark</label>
+                    </div>
+                    <div class="form-group">
+                        <select name="category" id="category" class="form-control">
+                            <option value="Apartment Park">Apartment Parking</option>
+                            <option value="Condo Park">Condo Parking</option>
+                            <option value="House Park">House Parking</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <label for="category" class="form-control-placeholder">Category</label>
+                        <span class="custom-arrow"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="parking_img" style="opacity: 0.5;">
+                            Add an Image of your Parking Space <br>
+                        </label>
+                        <input type="file" accept="image/jpg, image/png, image/jpeg" name="parkingImg" id="parkingImg-1" required  class="custom-file-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="landDoc" style="opacity: 0.5;">
+                            Add a PDF File for Land Documents (For Verification Purpose)<br>
+                        </label>
+                        <input type="file" accept="application/pdf" name="landDoc" id="landDoc" required  class="custom-file-input-land">
+                    </div>
+                    <div class="form-group">
+                        <textarea type="text" rows="3" id="desc" required  class="form-control" name='spacedsc'></textarea>
+                        <label for="desc" class="form-control-placeholder">Description</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="numSlots" required  class="form-control" name='spacenos'>
+                        <label for="numSlots" class="form-control-placeholder">Number of Slots</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="price" required  class="form-control" name='spaceprice'>
+                        <label for="price" class="form-control-placeholder">Price (Per/Day)</label>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 3em;">
+                        <input type="submit" value="Create" id="createSpace" class="create-btn" name='spacesubmit'>
+                    </div>
+                </form>
+            </div>
+
+            <div class="pop-up-sub-cont2">
+                <label for="parking-img-display" style="opacity: 0.5; margin-top: 2em;">
+                    Parking Image <br>
+                </label>
+                <div class="image-preview-container">
+                    <div class="image-preview" id="imagePreview-1">
+                        <img id="output" src="" alt="Image Preview" class="image-preview__image-1">
+                        <span class="image-preview__default-text-1">Image Preview</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="pop-up-1">
+        <div class="pop-up-container3">
+            <h1>Update Space</h1>
+            <button onclick="closeDivToggle()">X</button>
+        </div>
+        <div class="pop-up-container4">
+            <div class="pop-up-sub-cont1">
+                <form action="" method="POST" class="form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="title" class="form-control" name="uptitle" required>
+                        <label class="form-control-placeholder" for="title">Title</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="city" class="form-control" name="upcity" required>
+                        <label class="form-control-placeholder" for="city">City</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="address" class="form-control" name="upaddress" required>
+                        <label class="form-control-placeholder" for="address">Address</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="landmark" class="form-control" name="uplandmark" required>
+                        <label class="form-control-placeholder" for="landmark">Landmark</label>
+                    </div>
+                     <div class="form-group">
+                        <label for="parking_img" style="opacity: 0.5;">
+                            Update an Image of your Parking Space <br>
+                        </label>
+                        <input type="file" accept="image/jpg, image/png, image/jpeg" name="newimg" id="parkingImg-2" required  class="custom-file-input">
+                    </div>
+                    <div class="form-group">
+                        <textarea type="text" rows="3" id="desc" required  class="form-control" name="updisc"></textarea>
+                        <label for="desc" class="form-control-placeholder">Description</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="price" required  class="form-control" name="upprice">
+                        <label for="price" class="form-control-placeholder">Price (Per/Day)</label>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 3em;">
+                        <button type="submit" name="pudatespace" value="Update" id="createSpace" class="create-btn">Update</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="pop-up-sub-cont2">
+                <label for="parking-img-display" style="opacity: 0.5; margin-top: 2em;">
+                    Parking Image <br>
+                </label>
+                <div class="image-preview-container">
+                    <div class="image-preview" id="imagePreview-2">
+                        <img id="output" src="" alt="Image Preview" class="image-preview__image-2">
+                        <span class="image-preview__default-text-2">Image Preview</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<script>
+    const parkingCardTemplate = document.querySelector("[data-park-template]")
+    const parkingCardContainer = document.querySelector("[data-park-cards-container]")
+    const searchInput = document.querySelector("[data-search]")
+    let parkingCards = []
+
+    searchInput.addEventListener("input", e => {
+        const value = e.target.value.toLowerCase()
+        console.log(value)
+        parkingCards.forEach(user => {
+            const isVisible = user.city.toLowerCase().includes(value)|| user.title.toLowerCase().includes(value)
+
+            user.element.classList.toggle("hide", !isVisible)
+        })
+    })
+
+    fetch("{% static 'mysite/dash.json'%}")
+        .then(res => res.json())
+        .then(data => {
+            parkingCards = data.map(user => {
+                const card = parkingCardTemplate.content.cloneNode(true).children[0]
+                const category = card.querySelector("[data-category]")
+                const title = card.querySelector("[data-title]")
+                const city = card.querySelector("[data-city]")
+                const imagespark = card.querySelector("[data-img]")
+                const price = card.querySelector("[data-price]")
+                const status = card.querySelector("[data-status]")
+                const slots = card.querySelector("[data-slots]")
+                const updatebtn = card.querySelector("[updatebtn]")
+                const deletebtn = card.querySelector("[deletebnt]")
+                const slash = ' / '
+                const allandavl = user.fields.availslots + slash +user.fields.slots
+                
+                category.textContent = user.fields.type
+                title.textContent = user.fields.title
+                city.textContent = user.fields.city
+                price.textContent = user.fields.price
+                imagespark.src = `${user.fields.image}`
+                status.textContent = user.fields.status
+                slots.textContent = allandavl
+                updatebtn.value = user.pk
+                deletebtn.value = user.pk
+                //console.log(images.src)
+                 
+                //return { category: user.category, title: user.title, location: user.location, price: user.price, element: card }
+                if (status.textContent === "Approved") {
+                    status.classList.toggle("approved")
+                
+                } else if (status.textContent === "Pending") {
+                    status.classList.toggle("pending")
+                
+                } else if (status.textContent === "Rejected") {
+                    status.classList.toggle("rejected")
+                }
+                parkingCardContainer.append(card)
+                return {title: user.fields.title, city: user.fields.city, price: user.fields.price,imagespark : user.fields.image ,status:user.fields.status,slots:allandavl,category:user.type,deletebtn:user.pk,element: card }
+            })        
+        })
+  </script>
+
+  <script type="text/javascript">
+    function clickeddata(obj){
+        var value = 0
+       // $("button").click(function(e){
+            value=$(obj).val();
+            console.log($(obj).val())
+                //$(document).on('input','#clickedform',function(e){
+
+                        //preventDefault();
+
+                        $.ajax({
+                            type:'POST',
+                            url: '/updateclicked/',
+                            data:{
+                                upclicked : value,
+                                csrfmiddlewaretoken :$('input[name=csrfmiddlewaretoken]').val()
+                            },
+                            sucess:function(){
+                                console.log("Data Transfered")
+                            }
+
+                        });
+             //   });
+       // });
+
+    }
+
+    function clickeddatadel(obj){
+        var delvalue = 0
+             delvalue=$(obj).val();
+            console.log($(obj).val())
+                        $.ajax({
+                            type:'POST',
+                            url: '/updateclicked/',
+                            data:{
+                                delclicked : delvalue,
+                                csrfmiddlewaretoken :$('input[name=csrfmiddlewaretoken]').val()
+                            }
+
+                        });
+    }
+    </script>
+
+
+    <script src="{% static 'mysite/lend_your_space.js'%}"></script>
+
+
+</body>
+</html>

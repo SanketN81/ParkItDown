@@ -1,0 +1,854 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background: #000;
+  justify-content: center;
+  align-items: center;
+}
+
+::-webkit-scrollbar {
+    width: .5em;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(160, 160, 160);
+    border-radius: 20px;
+    margin-block: .5em;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #0a0a0a;
+    border-radius: 20px;
+    border: 2px solid rgb(160, 160, 160);
+}
+.webname{
+ width: 100%;
+ height: 1em;
+ display: flex;
+ justify-content: flex-start;
+}
+
+svg {
+    display: block;
+    position: absolute;
+    left: -2.9em;
+    top: -1.6em;
+    font: 5.5em 'Montserrat';
+    width: 960px;
+    height: 300px;
+    z-index: 4;
+}
+
+.text-copy {
+    fill: none;
+    stroke: white;
+    stroke-dasharray: 6% 29%;
+    stroke-width: 5px;
+    stroke-dashoffset: 0%;
+    animation: stroke-offset 5.5s infinite linear;
+}
+
+.text-copy:nth-child(1){
+  stroke: #4D163D;
+  animation-delay: -1;
+}
+
+.text-copy:nth-child(2){
+  stroke: #840037;
+  animation-delay: -2s;
+}
+
+.text-copy:nth-child(3){
+  stroke: #BD0034;
+  animation-delay: -3s;
+}
+
+.text-copy:nth-child(4){
+  stroke: #BD0034;
+  animation-delay: -4s;
+}
+
+.text-copy:nth-child(5){
+  stroke: #FDB731;
+  animation-delay: -5s;
+}
+
+@keyframes stroke-offset{
+  100% {stroke-dashoffset: -35%;}
+}
+
+
+
+.action {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.action .profile {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 0 10px 3px crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+.action .profile img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.action .menu {
+  position: absolute;
+  top: 100px;
+  right: -10px;
+  padding: 10px 20px;
+  background: rgb(34, 34, 34);
+  width: 200px;
+  box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 0 20px 2px crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.action .menu.active {
+  top: 65px;
+  visibility: visible;
+  opacity: 1;
+}
+
+.action .menu::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: 22px;
+  width: 20px;
+  height: 20px;
+  background: rgb(34, 34, 34);
+  transform: rotate(45deg);
+}
+
+.action .menu h3 {
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px 0;
+  font-weight: 500;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2em; 
+}
+
+.action .menu ul li {
+  list-style: none;
+  padding: 10px 0;
+  border-top: 1px solid #fff;
+  display: flex;
+  align-items: center;
+}
+
+.action .menu ul li img {
+  max-width: 20px;
+  margin-right: 10px;
+  transition: 0.5s;
+}
+
+.action .menu ul li a {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  transition: 0.5s;
+}
+
+.action .menu ul li input {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    transition: 0.5s;
+  }
+
+.action .menu ul li:hover a {
+  color: crimson;
+}
+
+.search-container {
+  position: absolute;
+  margin: 13.5em auto;
+  top: 1.5%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  height: 100px;
+}
+.search-container .search {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 65px;
+  height: 65px;
+  background: crimson;
+  border-radius: 50%;
+  transition: all 1s;
+  z-index: 4;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+}
+.search-container .search:hover {
+  cursor: pointer;
+}
+.search-container .search::before {
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: 22px;
+  right: 0;
+  bottom: 0;
+  left: 22px;
+  width: 12px;
+  height: 2px;
+  background: white;
+  transform: rotate(45deg);
+  transition: all 0.5s;
+}
+.search-container .search::after {
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: -5px;
+  right: 0;
+  bottom: 0;
+  left: -5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid white;
+  transition: all 0.5s;
+}
+.search-container input {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  outline: none;
+  border: none;
+  background: crimson;
+  color: white;
+  text-shadow: 0 0 10px crimson;
+  padding: 0 80px 0 20px;
+  border-radius: 30px;
+  box-shadow: 0 0 25px 0 crimson, 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+  transition: all 1s;
+  opacity: 0;
+  z-index: 5;
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+}
+.search-container input:hover {
+  cursor: pointer;
+}
+.search-container input:focus {
+  width: 210px;
+  opacity: 1;
+  cursor: text;
+}
+.search-container input:focus ~ .search {
+  right: -270px;
+  background: #151515;
+  z-index: 6;
+}
+.search-container input:focus ~ .search::before {
+  top: 0;
+  left: 0;
+  width: 25px;
+}
+.search-container input:focus ~ .search::after {
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 2px;
+  border: none;
+  background: white;
+  border-radius: 0%;
+  transform: rotate(-45deg);
+}
+.search-container input::placeholder {
+  color: white;
+  opacity: 0.7;
+}
+
+.card-container {
+  position: relative;
+  top: 33em;
+  width: 95%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18em, 18em));
+  column-gap: 3em;
+  row-gap: 3em;
+  justify-content: center;
+  align-items: center;
+  padding: 3em;
+}
+
+.card-container a {
+  text-decoration: none;
+}
+
+.card-container .card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: crimson;
+  width: 18em;
+  height: 18em;
+  border-radius: 10px;
+  box-shadow: 0 0 25px 0 crimson, 0 25px 25px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.5s;
+}
+
+.card-container .card img {
+  width: 100%;
+  height: 10em;
+  object-fit: cover;
+  border-bottom: 4px solid #000;
+  transition: all 0.5s;
+}
+
+.card-container .card .park-desc {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  color: #000;
+  height: 100em;
+  top: 5em;
+  padding: 10px;
+  margin: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: rgb(253, 239, 239);
+  box-shadow: 0 0 5px 0 rgb(0, 0, 0), 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+.title-city-category {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  padding-left: .5em;
+}
+
+.park-desc-price {
+  width: 110%;
+  height: 100%;
+  margin-left: 20%;
+  margin-top: 5%;
+  
+  align-items: center;
+  justify-content: center;
+}
+
+.card-container .card .park-desc img {
+  max-width: 15px;
+  height: 15px;
+  border: none;
+  margin-right: .2em;
+}
+
+.card-container .card .park-desc h3 {
+  display: flex;
+  color: #000;
+  justify-content: flex-start;
+  font-size: 1.5em;
+}
+
+.card-container .card .park-desc h5 {
+  display: flex;
+  color: #000;
+  justify-content: flex-start;
+  font-size: 13px;
+}
+
+.hide {
+  display: none;
+}
+
+
+.park-desc .title-city-category span {
+  display: flex;
+  justify-content: flex-start;
+}
+.park-desc-price .cardbtn{
+  background-color: crimson;
+  border: none;
+  display: block;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 12px;
+  padding-right: 12px;
+
+}
+.park-desc-price .subprice{
+  display: flex;
+}
+.park-desc-price .subprice sub{
+  margin-top: 6px;
+}
+.homeBtn {
+    position: absolute;
+    text-decoration: none;
+    top: 2em;
+    right: 2em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: crimson;
+    transition: 0.2s ease-in-out;
+  }
+
+  .homeBtn:hover {
+    text-decoration: none;
+    box-shadow: 1px 1px 10px rgb(132, 13, 37) inset;
+  }
+
+
+
+/*------------------------*/
+@keyframes btn_noise {
+  0% {
+    clip: rect(20rem, 50rem, 10rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0);
+  }
+  2.5% {
+    clip: rect(3rem, 50rem, 8rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.025);
+  }
+  5% {
+    clip: rect(8rem, 50rem, 21rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+  }
+  7.5% {
+    clip: rect(18rem, 50rem, 25rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.075);
+  }
+  10% {
+    clip: rect(13rem, 50rem, 12rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+  }
+  12.5% {
+    clip: rect(14rem, 50rem, 7rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.125);
+  }
+  15% {
+    clip: rect(14rem, 50rem, 20rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+  }
+  17.5% {
+    clip: rect(22rem, 50rem, 20rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.175);
+  }
+  20% {
+    clip: rect(8rem, 50rem, 25rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+  22.5% {
+    clip: rect(15rem, 50rem, 25rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.225);
+  }
+  25% {
+    clip: rect(4rem, 50rem, 23rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+  }
+  27.5% {
+    clip: rect(4rem, 50rem, 11rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.275);
+  }
+  30% {
+    clip: rect(3rem, 50rem, 23rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  }
+  32.5% {
+    clip: rect(10rem, 50rem, 17rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.325);
+  }
+  35% {
+    clip: rect(19rem, 50rem, 9rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.35);
+  }
+  37.5% {
+    clip: rect(7rem, 50rem, 25rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.375);
+  }
+  40% {
+    clip: rect(24rem, 50rem, 19rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+  }
+  42.5% {
+    clip: rect(15rem, 50rem, 5rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.425);
+  }
+  45% {
+    clip: rect(14rem, 50rem, 15rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.45);
+  }
+  47.5% {
+    clip: rect(7rem, 50rem, 12rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.475);
+  }
+  50% {
+    clip: rect(25rem, 50rem, 21rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  }
+  52.5% {
+    clip: rect(19rem, 50rem, 15rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.525);
+  }
+  55% {
+    clip: rect(1rem, 50rem, 17rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.55);
+  }
+  57.5% {
+    clip: rect(21rem, 50rem, 10rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.575);
+  }
+  60% {
+    clip: rect(15rem, 50rem, 13rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+  }
+  62.5% {
+    clip: rect(4rem, 50rem, 6rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.625);
+  }
+  65% {
+    clip: rect(13rem, 50rem, 20rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.65);
+  }
+  67.5% {
+    clip: rect(24rem, 50rem, 10rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.675);
+  }
+  70% {
+    clip: rect(16rem, 50rem, 14rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+  }
+  72.5% {
+    clip: rect(8rem, 50rem, 1rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.725);
+  }
+  75% {
+    clip: rect(21rem, 50rem, 2rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.75);
+  }
+  77.5% {
+    clip: rect(20rem, 50rem, 2rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.775);
+  }
+  80% {
+    clip: rect(21rem, 50rem, 15rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+  }
+  82.5% {
+    clip: rect(4rem, 50rem, 12rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.825);
+  }
+  85% {
+    clip: rect(5rem, 50rem, 12rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.85);
+  }
+  87.5% {
+    clip: rect(9rem, 50rem, 13rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.875);
+  }
+  90% {
+    clip: rect(3rem, 50rem, 2rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.9);
+  }
+  92.5% {
+    clip: rect(25rem, 50rem, 14rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.925);
+  }
+  95% {
+    clip: rect(15rem, 50rem, 3rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.95);
+  }
+  97.5% {
+    clip: rect(2rem, 50rem, 14rem, -25rem);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.975);
+  }
+  100% {
+    clip: rect(9rem, 50rem, 23rem, -25rem);
+    box-shadow: 0 0 30px white;
+  }
+}
+@keyframes btn_noise2 {
+  0% {
+    clip: rect(22rem, 50rem, 9rem, -25rem);
+  }
+  2.5% {
+    clip: rect(25rem, 50rem, 8rem, -25rem);
+  }
+  5% {
+    clip: rect(10rem, 50rem, 19rem, -25rem);
+  }
+  7.5% {
+    clip: rect(24rem, 50rem, 21rem, -25rem);
+  }
+  10% {
+    clip: rect(19rem, 50rem, 14rem, -25rem);
+  }
+  12.5% {
+    clip: rect(14rem, 50rem, 5rem, -25rem);
+  }
+  15% {
+    clip: rect(7rem, 50rem, 6rem, -25rem);
+  }
+  17.5% {
+    clip: rect(25rem, 50rem, 9rem, -25rem);
+  }
+  20% {
+    clip: rect(21rem, 50rem, 19rem, -25rem);
+  }
+  22.5% {
+    clip: rect(2rem, 50rem, 15rem, -25rem);
+  }
+  25% {
+    clip: rect(2rem, 50rem, 9rem, -25rem);
+  }
+  27.5% {
+    clip: rect(19rem, 50rem, 1rem, -25rem);
+  }
+  30% {
+    clip: rect(1rem, 50rem, 23rem, -25rem);
+  }
+  32.5% {
+    clip: rect(3rem, 50rem, 12rem, -25rem);
+  }
+  35% {
+    clip: rect(22rem, 50rem, 20rem, -25rem);
+  }
+  37.5% {
+    clip: rect(8rem, 50rem, 22rem, -25rem);
+  }
+  40% {
+    clip: rect(14rem, 50rem, 16rem, -25rem);
+  }
+  42.5% {
+    clip: rect(17rem, 50rem, 10rem, -25rem);
+  }
+  45% {
+    clip: rect(14rem, 50rem, 19rem, -25rem);
+  }
+  47.5% {
+    clip: rect(24rem, 50rem, 8rem, -25rem);
+  }
+  50% {
+    clip: rect(1rem, 50rem, 10rem, -25rem);
+  }
+  52.5% {
+    clip: rect(17rem, 50rem, 8rem, -25rem);
+  }
+  55% {
+    clip: rect(10rem, 50rem, 21rem, -25rem);
+  }
+  57.5% {
+    clip: rect(22rem, 50rem, 13rem, -25rem);
+  }
+  60% {
+    clip: rect(25rem, 50rem, 12rem, -25rem);
+  }
+  62.5% {
+    clip: rect(4rem, 50rem, 17rem, -25rem);
+  }
+  65% {
+    clip: rect(20rem, 50rem, 11rem, -25rem);
+  }
+  67.5% {
+    clip: rect(6rem, 50rem, 13rem, -25rem);
+  }
+  70% {
+    clip: rect(22rem, 50rem, 7rem, -25rem);
+  }
+  72.5% {
+    clip: rect(7rem, 50rem, 23rem, -25rem);
+  }
+  75% {
+    clip: rect(8rem, 50rem, 21rem, -25rem);
+  }
+  77.5% {
+    clip: rect(22rem, 50rem, 23rem, -25rem);
+  }
+  80% {
+    clip: rect(5rem, 50rem, 4rem, -25rem);
+  }
+  82.5% {
+    clip: rect(18rem, 50rem, 16rem, -25rem);
+  }
+  85% {
+    clip: rect(10rem, 50rem, 4rem, -25rem);
+  }
+  87.5% {
+    clip: rect(20rem, 50rem, 4rem, -25rem);
+  }
+  90% {
+    clip: rect(13rem, 50rem, 3rem, -25rem);
+  }
+  92.5% {
+    clip: rect(4rem, 50rem, 15rem, -25rem);
+  }
+  95% {
+    clip: rect(25rem, 50rem, 17rem, -25rem);
+  }
+  97.5% {
+    clip: rect(16rem, 50rem, 20rem, -25rem);
+  }
+  100% {
+    clip: rect(3rem, 50rem, 8rem, -25rem);
+  }
+}
+@keyframes btn_ring {
+  0% {
+    box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0), 0 0 30px white;
+  }
+  100% {
+    box-shadow: inset 0 0 0 20px white, 0 0 30px white;
+  }
+}
+.btn {
+  border-radius: 50%;
+  transition: transform 0.5s cubic-bezier(1, 0, 0.5, -1) 0.25s, box-shadow 0.5s cubic-bezier(1, -5, 0.5, 5) 0.25s;
+  transform: scale(0.5);
+  animation: btn_noise 3s ease-in-out 1, btn_ring 1s ease-in-out 3s 1;
+  box-shadow: inset 0 0 0 20px white, 0 0 30px white;
+  left: 50%;
+  top: 40%;
+  margin: -12.5rem;
+  width: 25rem;
+  height: 25rem;
+  position: absolute;
+  cursor: pointer;
+}
+.btn::before, .btn::after {
+  opacity: 0;
+  content: "";
+  position: absolute;
+  width: 31rem;
+  height: 29rem;
+  margin: -2rem -3rem -2rem -3rem;
+  border-radius: 50%;
+  z-index: -10;
+}
+.btn::before {
+  box-shadow: 0 -15px 30px -15px rgba(255, 255, 255, 0.8), -25px 15px 50px -25px rgba(255, 255, 255, 0.2), 0 -25px 15px -20px rgba(255, 255, 255, 0.3);
+}
+.btn::after {
+  box-shadow: 0 -25px 20px -15px rgba(255, 255, 255, 0.2), 10px 25px 15px -30px white, -10px 30px 20px -30px rgba(255, 255, 255, 0.3);
+}
+
+.btn-info {
+  border-radius: 50%;
+  transform: scale(0);
+  transition: all 0.3s ease-in-out;
+  background-image: repeating-radial-gradient(rgba(255, 255, 255, 0.2) 0, black 2px, black 50px);
+  overflow: hidden;
+  opacity: 0;
+  background-size: 12.5rem 12.5rem;
+  position: absolute;
+  width: inherit;
+  height: inherit;
+}
+
+
+.btn:hover::before {
+  animation: btn_spin 0.5s cubic-bezier(0.6, 0.2, 0, 0.8) infinite alternate, btn_fade 1.5s cubic-bezier(0.4, 0.2, 0.1, 0.7);
+}
+.btn:hover::after {
+  animation: btn_spin 1s cubic-bezier(0.4, 0.2, 0.1, 0.7) 0.25s infinite alternate, btn_fade 1.5s cubic-bezier(0.4, 0.2, 0.1, 0.7);
+}
+.btn:hover .btn-info {
+  transform: scale(1);
+  transition-delay: 1.75s;
+  animation: btn-bg_size 4s cubic-bezier(0.2, 0, 1, 0.5) infinite alternate, btn-bg_positon 3s ease-in-out infinite alternate;
+  opacity: 1;
+}
+.btn:hover .btn-h1 {
+  animation: btn_noise2 4s 1 linear alternate-reverse;
+  left: 23%;
+}
+.btn:hover .btn-author {
+  transition-delay: 2.25s;
+  opacity: 1;
+}
+.btn:hover .btn-line {
+  transition-delay: 1.75s;
+  width: 19rem;
+  margin: 10.5rem 3rem 1rem;
+}
+
+@keyframes btn_spin {
+  100% {
+    transform: rotate(360deg) scale(1.5);
+  }
+}
+@keyframes btn_fade {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: .2;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes btn-bg_size {
+  100% {
+    background-size: 2.5rem 2.5rem;
+  }
+}
+@keyframes btn-bg_positon {
+  0% {
+    background-position: left top;
+  }
+  25% {
+    background-position: right top;
+  }
+  50% {
+    background-position: right bottom;
+  }
+  75% {
+    background-position: left bottom;
+  }
+}

@@ -1,0 +1,211 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+html{
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    justify-content: center;
+    align-items: center;
+}
+
+::-webkit-scrollbar {
+    width: .5em;
+    height: .5em;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(160, 160, 160);
+    border-radius: 20px;
+    margin-block: .5em;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #0a0a0a;
+    border-radius: 20px;
+    border: 2px solid rgb(160, 160, 160);
+}
+
+.container-top {
+    display: flex;
+    flex-direction: column;
+    height: 10em;
+    width: 95%;
+    justify-content: flex-end;
+}
+
+.logout-btn {
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    width: 5em;
+    color: #fff;
+    background-color: crimson;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.1s;
+}
+
+.logout-btn:active {
+    box-shadow: 1px 1px 10px rgb(145, 15, 41) inset;
+}
+
+.container-bottom-spaces {
+    display: grid;
+    width: 95%;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow-x: scroll;
+}
+
+.column-spaces-row {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr .85fr 1fr 1.5fr;
+    gap: 1em;
+    border-radius: 10px;
+    justify-content: center;
+    background-color: rgb(95, 95, 95);
+} 
+
+.spaces-row {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr .85fr 1fr 1.5fr;
+    width: 94em;
+    gap: 1em;
+    border-radius: 10px;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.spaces-row:hover {
+    background-color: rgb(95, 95, 95);
+}
+
+.spaces-row-element {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 3em;
+    color: #fff;}
+
+.img-container {
+    display: flex;
+    justify-content: center;
+    max-width: 5em;
+    min-width: 40%;
+    height: 100%;
+} 
+
+.img-container img {
+    max-width: 100%;
+    min-width: 4em;
+    border-radius: 10px;
+}
+
+.img-title {
+    margin-left: 10px;
+    max-width: 100%;
+}
+
+.viewDoc-btn {
+    color: #fff;
+    background-color: rgb(2, 130, 235);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    transition: 0.1s;
+    text-decoration: none;
+}
+
+.viewDoc-btn:active {
+    box-shadow: 1px 1px 10px rgb(1, 86, 155) inset;
+}
+
+.approve-btn {
+    color: #fff;
+    background-color: rgb(2, 235, 72);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 15px;
+    transition: 0.1s;
+}
+
+.approve-btn:active {
+    box-shadow: 1px 1px 10px rgb(6, 168, 0) inset;
+}
+
+.reject-btn {
+    color: #fff;
+    background-color: rgb(255, 0, 51);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 15px;
+    transition: 0.1s;
+}
+
+.reject-btn:active {
+    box-shadow: 1px 1px 10px rgb(158, 0, 32) inset;
+}
+
+.search-add {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 0;
+    align-items: center;
+}
+
+.search-bar {
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    background-color: rgb(95, 95, 95);
+    color: #fff;
+    padding: 5px 10px;
+    border: 2px solid rgb(0, 0, 0);
+    outline: 2px solid crimson;
+    height: 1.5em;
+    width: 1em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-search'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: left 8px center;
+    transition: 0.5s;
+}
+
+.search-add input::placeholder {
+    position: relative;
+    color: #fff;
+    left: 1.8em;
+}
+
+.search-bar:focus {
+    width: 15em;
+    padding: 5px 10px 5px 30px;
+}
+@media only screen and (min-width: 1454px) {
+
+    .container-bottom-spaces {
+        overflow-x: hidden;
+    }
+}
+
+.hide {
+  display: none;
+}   

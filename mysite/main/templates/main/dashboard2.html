@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{%static 'mysite/dashboard.css'%}">
+   <!--<script src="{% static 'mysite/dashboard_script.js'%}"></script>-->
+</head>
+<body>
+<!--------------------------------------------------->
+
+  <div class='scene-button'>
+    <div class='btn'>
+      
+    </div>
+  </div>
+
+
+  <!--------------------------------------------------->
+  <div class="action">
+    <div class="profile" onclick="menuToggle()">
+      <img src="{% static 'mysite/profile_image.png'%}" alt="">
+    </div>
+    <div class="menu">
+      <h3>Kshitij Karkera</h3>
+      <ul>
+        <li><img src="{% static 'mysite/My_Profile.png'%}" alt=""><a href="">My Profile</a></li>
+        <li><img src="{% static 'mysite/Book_parking_slot.png'%}" alt=""><a href="">Your Booked Slot</a></li>
+        <li><img src="{% static 'mysite/Lend_your_space.png'%}" alt=""><a href="lend_your_space.html">Lend your Space</a></li>
+        <li><img src="{% static 'mysite/Logout.png'%}" alt=""><a href="">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+  <form method="post" autocomplete="off">
+  <div class="search-container">
+    {% csrf_token %} 
+    <input type="text" placeholder="Search..." autocomplete="off" name="search_city" data-search>
+    <div class="search"></div>
+  </div>  
+  </form>
+
+  <div class="card-container" data-park-cards-container>
+    <template data-park-template>
+      <a href="#">
+        <div class="card">
+          <img data-img>
+          <div class="park-desc">
+            <div class="title-city-category">
+              <h5 data-category></h5>
+              <h3 data-title></h3>
+              <h5 data-city> <img src="{% static 'mysite/Location.png'%}" alt=""></h5>
+            </div>
+            <div class="park-desc-price">
+              <h2 data-price> </h2><sub>/ Day</sub>
+            </div>
+          </div>
+        </div>
+      </a>
+    </template>
+  </div>
+  
+
+  <script>
+    function menuToggle() {
+      const toggleMenu = document.querySelector('.menu');
+      toggleMenu.classList.toggle('active')
+    }
+  </script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+  <script>
+    $(document).ready(function(){
+      $("#btn_click").on("click", function(){
+        $(".btn-h1 span").addClass("btn_ghost").delay(1000).queue(function(){
+          $(".btn-line").addClass("btn_gone");
+          $(".btn-author").addClass("btn_gone");
+          $(".btn-copy").addClass("btn_gone");
+          $(".btn-button").addClass("btn_gone").delay(500).queue(function(){
+            $(".btn-info").addClass("btn_white");
+            $(".btn").addClass("btn_shrink").delay(1000).queue(function(){
+              $(".scene-button").css("display", "none");
+              $(".scene-spinner").css("display", "flex").delay(4500).queue(function(){
+                $(".scene-spinner").css("display", "none");
+                $(".scene-torus").css("display", "flex").delay(9000).queue(function(){
+                  $(".scene-torus").css("display", "none");
+                  $(".scene-hole").css("display", "flex").delay(6500).queue(function(){
+                    $(".scene-hole").css("display", "none");
+                    $(".scene-polygon").css("display", "flex");
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  </script>
+
+<!---------------------------------------------------->  
+<script>
+    const parkingCardTemplate = document.querySelector("[data-park-template]")
+    const parkingCardContainer = document.querySelector("[data-park-cards-container]")
+    const searchInput = document.querySelector("[data-search]")
+    let parkingCards = []
+
+    searchInput.addEventListener("input", e => {
+        const value = e.target.value.toLowerCase()
+        console.log(value)
+        parkingCards.forEach(user => {
+            const isVisible = user.city.toLowerCase().includes(value)
+
+            user.element.classList.toggle("hide", !isVisible)
+        })
+    })
+
+    fetch("{% static 'mysite/dash.json'%}")
+        .then(res => res.json())
+        .then(data => {
+            parkingCards = data.map(user => {
+                const card = parkingCardTemplate.content.cloneNode(true).children[0]
+                const category = card.querySelector("[data-category]")
+                const title = card.querySelector("[data-title]")
+                const city = card.querySelector("[data-city]")
+                const imagespark = card.querySelector("[data-img]")
+                const price = card.querySelector("[data-price]")
+               // category.textContent = user.category
+                title.textContent = user.fields.title
+                city.textContent = user.fields.city
+                price.textContent = user.fields.price
+                imagespark.src = `${user.fields.image}`
+                //console.log(images.src)
+                 parkingCardContainer.append(card)
+                //return { category: user.category, title: user.title, location: user.location, price: user.price, element: card }
+                return {title: user.fields.title, city: user.fields.city, price: user.fields.price,imagespark : user.fields.image ,element: card }
+            })        
+        })
+  </script>
+
+
+
+</body>
+</html>

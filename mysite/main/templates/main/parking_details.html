@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Details</title>
+    <link rel="stylesheet" href="{% static 'mysite/parking_details.css'%}">
+</head>
+<body>
+   
+   {% if loginstatus == 'NotLogedin' %}
+    <a class="homeBtn" href="{% url 'sign'%}">Sign In/Up</a>
+    {% endif %}
+    {% if loginstatus == 'Logedin' %}
+    <form method="post">
+        {% csrf_token %}
+    <div class="action">
+        <div class="profile" onclick="menuToggle()">
+            <img src="{% static 'mysite/profile_image.png'%}" alt="">
+        </div>
+        <div class="menu">
+            <h3>{{nameofuser}}</h3>
+            <ul>
+            <li><img src="{% static 'mysite/My_Profile.png'%}" alt=""><a href="">Home</a></li>
+            <li><img src="{% static 'mysite/Book_parking_slot.png'%}" alt=""><a href="{% url 'booked'%}">Your Booked Slot</a></li>
+            <li><img src="{% static 'mysite/Lend_your_space.png'%}" alt=""><a href="{% url 'land Your Space'%}">Lend your Space</a></li>
+            <li><img src="{% static 'mysite/Logout.png'%}" alt=""><input type="submit" name="logout" value="Logout" style="background: none;border: none;color: #fff;font-size: 16px;"></li>
+            </ul>
+        </div>
+    </div>
+    </form>
+    {% endif %}
+    <div class="container-1">
+        <img src="{{carddetail.image}}" alt="">
+    </div>
+    <div class="container-2">
+        
+        <div class="sub-container-1">
+            <div class="parking-details">
+                <div class="details">
+                    <div class="parking-category">{{carddetail.type}}</div>
+                    <h2>{{carddetail.title}}</h2>
+                    <div class="city">{{carddetail.city}}-{{carddetail.landmark}}</div>
+                </div>
+                <div class="owner">
+                    <div class="owner-heading">Owner : </div>
+                    <div class="owner-name">{{carddetail.name}}</div>
+                </div>
+            </div>
+            <div class="addressspace">Address - {{carddetail.address}}</div>
+            <div class="desc">{{carddetail.discription}}</div>
+        </div>
+        
+        <div class="sub-container-2">
+            <div class="price"><h2>₹{{carddetail.price}} </h2><sub>/ Day</sub> </div>    
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group" style="margin-top: 3em;">
+                    <input type="date" id="fromDate" name="fromDate" class="form-control">
+                    <label for="fromDate" class="form-control-placeholder">From Date : </label>
+                </div>
+                <div class="form-group">
+                    <input type="date" id="toDate" name="toDate" class="form-control">
+                    <label for="toDate" class="form-control-placeholder">To Date : </label>
+                </div>
+                <div class="form-group">
+                    {% if current_Logedin_user != "" %}
+                    <form method="post">
+                        {% csrf_token %}
+                    <input type="submit" name="book" value="BOOK SLOT" id="bookSpace" class="book-btn">
+                    
+                    </form>
+                    {% endif %}
+                    {% if current_Logedin_user == "" %}
+                    <form method="post">
+                        {% csrf_token %}
+                    <input type="submit" name="loginorup" value="Sign In/Up" id="bookSpace" class="book-btn">
+                    </form>
+                    {% endif %}
+                </div>
+            </form>
+            
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'mysite/parking_details.js'%}"></script>
+</body>
+</html>
